@@ -24,6 +24,10 @@ h1 {
   font-size:28px;
 }
 
+h1.center {
+    text-align: center;
+}
+
 h2 {
   color:#393939;
 }
