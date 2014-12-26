@@ -163,7 +163,7 @@ header ul a strong {
   color:#222;
 }
 
-section {
+section.section-right {
   width:500px;
   float:right;
   padding-bottom:50px;
