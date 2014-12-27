@@ -1,0 +1,14 @@
+-------- Working with Github's API --------
+
+URL: https://developer.github.com/v3/oauth_authorizations/#oauth-authorizations-api
+
+What is OAuth and why do I care?
+Most APIs support Basic Authentication which accepts a username and a password to authenticate users. While simple for developers, end users shouldn't be expected to hand over their application passwords to third parties to make requests on their behalf. Security concerns aside, it's also a maintenance problem. Changing your password just to shut off one rogue site 
+means you have to update all the sites using that password.
+
+OAuth ditches the username and password for a single token that uniquely identifies a user and verifies their access.
+
+For the GitHub API, which we'll use throughout this course, access tokens are 40 character strings.
+An OAuth request is a simple call to the GitHub API to fetch a user's profile information by sending their token in the HTTP header.
+
+WE DON'T NEED OAUTH unless we need access to private repos, which we do't at least at the moment. So we can just access by this: https://api.github.com/orgs/womenwhocodedc/repos (GET requests minus token)
