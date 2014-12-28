@@ -43,18 +43,104 @@
           <h3>Listing of repositories under WomenWhoCodeDC!</h3>
           <small>Currently focussing on Front-End hack nights</small>
           <p>To find active repositories, check our <a href="https://github.com/womenwhocodedc">Github Page</a> page.</p>
+          <div id="w" class="content">
+            <div id="ghapidata" class="clearfix"></div>
+          </div>
         </section>
+        
       </div>
-      <footer>
+      <!-- <footer>
         <p class="view">
           <a href="http://www.meetup.com/Women-Who-Code-DC/">Our Meetup Group</a> <br />
           <a href="https://github.com/womenwhocodedc">Our GitHub Profile</a>
           <a href="https://twitter.com/WomenWhoCodeDC" class="twitter-follow-button" data-show-count="false">Follow @WomenWhoCodeDC</a>
           <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
         </p>
-      </footer>
+      </footer> -->
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
     <script src="../assets/javascripts/scale.fix.js"></script>
+
+    <script type="text/javascript">
+
+      $(document).ready(function(){
+        // $('#ghapidata').html('<div id="loader"><img src="css/loader.gif" alt="loading..."></div>');
+        
+        console.log('auto loading!!');
+        
+        var orgName = 'womenwhocodedc';
+        var requri   = 'https://api.github.com/orgs/'+orgName;
+        var repouri  = 'https://api.github.com/users/'+orgName+'/repos';
+
+        // var requri   = 'https://api.github.com/orgs/womenwhocodedc';
+        // var repouri  = 'https://api.github.com/orgs/womenwhocodedc/repo';
+        
+        requestJSON(requri, function(json) {
+          // console.log("JSON Response!");
+          // console.log(json);
+
+          if(json.message == "Not Found" || orgName == '') {
+            // console.log("Not Found!");
+            $('#ghapidata').html("<h2>No User Info Found</h2>");
+          }
+          
+          else {
+            // else we have a user and we display their info
+            var fullname   = json.name;
+            var orgName   = json.login;
+            var aviurl     = json.avatar_url;
+            var profileurl = json.html_url;
+            var location   = json.location;
+            var followersnum = json.followers;
+            var followingnum = json.following;
+            var reposnum     = json.public_repos;
+            
+            if(fullname == undefined) { fullname = orgName; }
+            
+            var outhtml = '<h2>'+fullname+' <span class="smallname">(@<a href="'+profileurl+'" target="_blank">'+orgName+'</a>)</span></h2>';
+            outhtml = outhtml + '<div class="ghcontent"><div class="avi"><a href="'+profileurl+'" target="_blank"><img src="'+aviurl+'" width="80" height="80" alt="'+orgName+'"></a></div>';
+            outhtml = outhtml + '<p>Followers: '+followersnum+' - Following: '+followingnum+'<br>Repos: '+reposnum+'</p></div>';
+            outhtml = outhtml + '<div class="repolist clearfix">';
+            
+            
+            var repositories;
+            $.getJSON(repouri, function(json){
+              repositories = json;   
+              outputPageContent();                
+            });          
+            
+            function outputPageContent() {
+              // console.log("outputPageContent");
+              if(repositories.length == 0) { 
+                // console.log("No repos!");
+                outhtml = outhtml + '<p>No repos!</p></div>'; 
+              }
+              else {
+                // console.log("Repos found!");
+                outhtml = outhtml + '<p><strong>Repos List:</strong></p> <ul>';
+                $.each(repositories, function(index) {
+                  // console.log("Going over each Repo!");
+                  // console.log(repositories[index].html_url);
+                  outhtml = outhtml + '<li><a href="'+repositories[index].html_url+'" target="_blank">'+repositories[index].name + '</a></li>';
+                });
+                outhtml = outhtml + '</ul></div>'; 
+              }
+              $('#ghapidata').html(outhtml);
+            } // end outputPageContent()
+          } // end else statement
+        }); // end requestJSON Ajax call
+      });
+
+      function requestJSON(url, callback) {
+        $.ajax({
+          url: url,
+          complete: function(xhr) {
+            callback.call(null, xhr.responseJSON);
+          }
+        });
+      }
+    </script>
   </body>
 </html>
+
+
