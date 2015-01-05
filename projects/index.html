@@ -36,13 +36,7 @@
     </nav>
     <div class="wrapper main-content">
       <div>
-        <h1>Our Projects</h1>
-      </div>
-      <div>
         <section>
-          <h3>Listing of repositories under WomenWhoCodeDC!</h3>
-          <small>Currently focussing on Front-End hack nights</small>
-          <p>To find active repositories, check our <a href="https://github.com/womenwhocodedc">Github Page</a> page.</p>
           <div id="w" class="content">
             <div id="ghapidata" class="clearfix"></div>
           </div>
@@ -64,7 +58,7 @@
     <script type="text/javascript">
 
       $(document).ready(function(){
-        // $('#ghapidata').html('<div id="loader"><img src="css/loader.gif" alt="loading..."></div>');
+        //$('#ghapidata').html('<div id="loader"><img src="css/loader.gif" alt="loading..."></div>');
         
         console.log('auto loading!!');
         
@@ -76,16 +70,13 @@
         // var repouri  = 'https://api.github.com/orgs/womenwhocodedc/repo';
         
         requestJSON(requri, function(json) {
-          // console.log("JSON Response!");
-          // console.log(json);
-
+          
           if(json.message == "Not Found" || orgName == '') {
-            // console.log("Not Found!");
             $('#ghapidata').html("<h2>No repositories found</h2>");
           }
           
           else {
-            // else we have a user and we display their info
+            // else we have a repo and we display their info
             var fullname   = json.name;
             var orgName   = json.login;
             var aviurl     = json.avatar_url;
@@ -97,9 +88,8 @@
             
             if(fullname == undefined) { fullname = orgName; }
             
-            var outhtml = '<h2>'+fullname+' <span class="smallname">(@<a href="'+profileurl+'" target="_blank">'+orgName+'</a>)</span></h2>';
-            outhtml = outhtml + '<div class="ghcontent"><div class="avi"><a href="'+profileurl+'" target="_blank"><img src="'+aviurl+'" width="80" height="80" alt="'+orgName+'"></a></div>';
-            outhtml = outhtml + '<p>Followers: '+followersnum+' - Following: '+followingnum+'<br>Repos: '+reposnum+'</p></div>';
+            var outhtml = '<img src="'+aviurl+'" width="80" height="80" alt="'+orgName+'"><h3>Listing of repositories under '+fullname+'<span class="smallname"> @<a href="'+profileurl+'" target="_blank">'+orgName+'</a></h3></span>';
+            // outhtml = outhtml + '<p>Followers: '+followersnum+' | Following: '+followingnum+'</p></div>';
             outhtml = outhtml + '<div class="repolist clearfix">';
             
             
@@ -117,11 +107,11 @@
               }
               else {
                 // console.log("Repos found!");
-                outhtml = outhtml + '<p><strong>Repos List:</strong></p> <ul>';
+                outhtml = outhtml + '<h3>Repos List ('+reposnum+')</h3><ul>';
                 $.each(repositories, function(index) {
                   // console.log("Going over each Repo!");
                   // console.log(repositories[index].html_url);
-                  outhtml = outhtml + '<li><a href="'+repositories[index].html_url+'" target="_blank">'+repositories[index].name + '</a></li>';
+                  outhtml = outhtml + '<li><h4><a href="'+repositories[index].html_url+'" target="_blank">'+repositories[index].name + '</a><h4></li>';
                 });
                 outhtml = outhtml + '</ul></div>'; 
               }
