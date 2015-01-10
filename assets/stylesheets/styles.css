@@ -1,8 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
+@import url(http://fonts.googleapis.com/css?family=Ubuntu);
 
 body {
   padding-top: 100px;
-  font:14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Ubuntu', serif;
+  font-size: 16px;
   color:#777;
   font-weight:300;
 }
@@ -261,8 +263,10 @@ footer {
 /* Navbar main background */
 
 nav.navbar {
-    background: black;
-    border: none;
+  font-family: 'Lato', serif;
+  font-size: 18px;
+  background: black;
+  border: none;
 }
 
 /* Navbar title */
