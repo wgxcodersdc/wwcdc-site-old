@@ -5,33 +5,39 @@ $(function(){
   var requri   = 'https://api.github.com/orgs/'+orgName;
   var repouri  = 'https://api.github.com/users/'+orgName+'/repos';
 
-  requestJSON(requri, function(json) {
+  requestJSON(requri, function(gitData) {
     
-    if(json.message == "Not Found" || orgName == '') {
+    if(gitData.message == "Not Found" || orgName == '') {
       $('#ghAPIData').html("<h2>No repositories found</h2>");
     }
     
     else {
       // else we have a repo and we display their info
-      var fullname   = json.name;
-      var orgName   = json.login;
-      var aviurl     = json.avatar_url;
-      var profileurl = json.html_url;
-      var location   = json.location;
-      var followersnum = json.followers;
-      var followingnum = json.following;
-      var reposnum     = json.public_repos;
+
+      console.log(gitData)      
+
+      var fullname   = gitData.name;
+      var orgName   = gitData.login;
+      var aviurl     = gitData.avatar_url;
+      var profileurl = gitData.html_url;
+      var description = gitData.description;
+      var location   = gitData.location;
+      var followersnum = gitData.followers;
+      var followingnum = gitData.following;
+      var reposnum     = gitData.public_repos;
       
       if(fullname == undefined) { fullname = orgName; }
       
-      var outhtml = '<img src="'+aviurl+'" width="80" height="80" alt="'+orgName+'"><h3>Listing of repositories under <a href="'+profileurl+'" target="_blank">'+orgName+'</a> ('+reposnum+')</h3></span>';
+      var outhtml = '<h2>'+description+'</h2>';
+
+      outhtml = outhtml + '<h3>Listing of repositories under <a href="'+profileurl+'" target="_blank">'+orgName+'</a> ('+reposnum+')</h3></span>';
       
       outhtml = outhtml + '<div class="repolist clearfix">';
       
       
       var repositories;
-      $.getJSON(repouri, function(json){
-        repositories = json;   
+      $.getJSON(repouri, function(gitData){
+        repositories = gitData;   
         outputPageContent();                
       });          
       
