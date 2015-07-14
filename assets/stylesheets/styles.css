@@ -1,12 +1,18 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
 @import url(http://fonts.googleapis.com/css?family=Ubuntu);
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
-  padding-top: 100px;
+  padding-top: 100px; /* Padding for fixed top-nav */
   font-family: 'Ubuntu', serif;
   font-size: 16px;
   color:#777;
   font-weight:300;
+  margin-bottom: 110px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -51,7 +57,7 @@ a small {
   display:block;
 }
 
-.wrapper {
+.container {
   width:860px;
   margin:0 auto;
 }
@@ -104,7 +110,6 @@ img {
 header {
   width:270px;
   float:left;
-  position:fixed;
 }
 
 header ul {
@@ -168,7 +173,6 @@ header ul a strong {
 section.section-right {
   width:500px;
   float:right;
-  padding-bottom:50px;
 }
 
 small {
@@ -183,27 +187,24 @@ hr {
 }
 
 footer {
-  width:270px;
-  float:left;
-  position:fixed;
-  bottom:20px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Fixed height of footer */
+  height: 110px;
 }
 
 @media print, screen and (max-width: 960px) {
-  
-  div.wrapper {
+
+  div.container {
     width:auto;
     margin:0;
   }
   
-  header, section, footer {
+  header, section {
     float:none;
     position:static;
     width:auto;
-  }
-  
-  header {
-    padding-right:320px;
   }
   
   section {
@@ -211,6 +212,10 @@ footer {
     border-width:1px 0;
     padding:20px 0;
     margin:0 0 20px;
+  }
+
+  section.section-right {
+    float: none;
   }
   
   header a small {
@@ -245,6 +250,7 @@ footer {
 @media print, screen and (max-width: 480px) {
   body {
     padding:15px;
+    padding-top: 75px; /* Padding for fixed top-nav */
   }
   
   header ul {
